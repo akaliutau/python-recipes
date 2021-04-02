@@ -7,9 +7,9 @@ Topics covered so far:
 * RPA (web scraping)
 * OAuth2 authorization
 * Consuming public web APIs
-* Asynchronous messaging in Python
-* Microservices in Python
-* Serverless apps in Python
+* Asynchronous messaging in Python (TBA)
+* Microservices in Python (TBA)
+* Serverless apps in Python (TBA)
 
 
 Overview
