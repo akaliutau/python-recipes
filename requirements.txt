@@ -1,0 +1,11 @@
+beautifulsoup4==4.6.0
+selenium==3.6.0
+requests==2.20.0
+Flask==1.0
+PyYAML==5.4
+pymongo==3.6.0
+
+
+ConsoleMenu~=1.0.1
+spotify~=0.10.2
+Jinja2~=2.11.3
