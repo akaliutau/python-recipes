@@ -52,13 +52,14 @@ As a result all extra dependencies will be added
 This is a simple web-scraping console application
 
 
-1) One can perform testing in two ways - using standard browser with Chrome driver or the headless one. As for the latter, one can use PhantomJS (https://phantomjs.org/download.html)
-in this project we are using PhantomJS. Download and install it in some directory, f.e. phantom
+1) One can perform testing in two ways - using standard browser with Chrome driver or the headless one. As for the latter, one can use PhantomJS (https://phantomjs.org/download.html).
 
-6) Execute the following command in console (note way the module is executed due to presence of __main__ file in module):
+In this project we are using PhantomJS. Download and install it into some directory, f.e. phantom
+
+6) Execute the following command in console:
 
 ```
->python -m weatherapp -p WeatherComParser -u Celsius -a ae8230efd4bc57fdf721a02c7eb2b88c56aa6e71d73666328e33af3ea2039032132e24ae91b6a07862c5091a9d95a4b8 -td
+python -m weatherapp -p WeatherComParser -u Celsius -a ae8230efd4bc57fdf721a02c7eb2b88c56aa6e71d73666328e33af3ea2039032132e24ae91b6a07862c5091a9d95a4b8 -td
 ```
 
 
@@ -134,7 +135,7 @@ The screenshot on fixer_1.png shows how the page to open new account looks like
 3) Run the app:
 
 ```
-python -m forexapp --from EUR --to RUB --value 200 --token af65766c7c2403461e34867dc5142d44
+python -m forexapp --from EUR --to RUB --value 200 --token <your token>
 
 converting 200.0 units from EUR->RUB
 Fetching exchange rates from fixer.io [base currency: EUR]
