@@ -7,8 +7,8 @@ Topics covered so far:
 * RPA (web scraping)
 * OAuth2 authorization
 * Consuming public web APIs
+* Microservices in Python
 * Asynchronous messaging in Python (TBA)
-* Microservices in Python (TBA)
 * Serverless apps in Python (TBA)
 
 
@@ -55,7 +55,7 @@ This is a simple web-scraping console application
 1) One can perform testing in two ways - using standard browser with Chrome driver or the headless one. As for the latter, one can use PhantomJS (https://phantomjs.org/download.html)
 in this project we are using PhantomJS. Download and install it in some directory, f.e. phantom
 
-6) Execute the following command in console:
+6) Execute the following command in console (note way the module is executed due to presence of __main__ file in module):
 
 ```
 >python -m weatherapp -p WeatherComParser -u Celsius -a ae8230efd4bc57fdf721a02c7eb2b88c56aa6e71d73666328e33af3ea2039032132e24ae91b6a07862c5091a9d95a4b8 -td
@@ -99,7 +99,7 @@ api_version: 'v1'
 api_url: 'https://api.spotify.com'
 auth_method: 'AUTHORIZATION_CODE'
 ```
-3) Run auth code to get a token
+3) Run auth code to get a token (note way the module is executed - the FQN path must be specified)
 
 ```
 python -m spotify.spotify_auth
@@ -176,7 +176,139 @@ The result will be similar to this one (rates field was truncated for brevity):
 Cache eviction rule is very simple:
 <b> if the date of record in cache is too old (previous day or earlier) fresh data will be requested </b>
 
+# Microservices
 
+
+The module soa.microservices contains the simple implementation of Order microservice with the following endpoints:
+
+```
+
+```
+Official Django documentation on microservices can the found here https://docs.djangoproject.com/en/3.2/intro/tutorial01/
+
+
+Note the typical Django structure for project:
+```
+order/
+
+    main/
+       migrations/
+             __init__
+       <microservice implementation>
+      
+    order/
+       __init__
+       settings.py
+       urls.py
+       wsgi.py
+      
+    manage.py
+
+```
+
+In order to create all tables and add the initial auth records to internal db use the step 0:
+
+01) Preliminary step: generate all necessary code using the commands:
+
+create a package migrations inside your app directory (main in this case)
+
+create a migration tasks
+```
+python -m soa.microservices.order.manage makemigrations
+```
+perform migrations
+```
+python -m soa.microservices.order.manage migrate
+```
+The result should look like this one:
+
+```
+current directory D:\repos-research\python-recipes
+system paths ['D:\\repos-research\\python-recipes', 'C:\\ProgramData\\python391\\python39.zip', 'C:\\ProgramData\\python391\\DLLs', 'C:\\ProgramData\\python391\\lib', 'C:\\ProgramData\\python391', 'C:\\ProgramData\\python391\\lib\\site
+-packages', 'D:\\repos-research\\python-recipes', 'D:\\repos-research\\python-recipes\\soa\\microservices\\order']
+Operations to perform:
+  Apply all migrations: admin, auth, authtoken, contenttypes, main, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying authtoken.0001_initial... OK
+  Applying authtoken.0002_auto_20160226_1747... OK
+  Applying main.0001_initial... OK
+  Applying sessions.0001_initial... OK
+
+```
+1) Create an initial user (admin):
+
+
+```
+python -m soa.microservices.order.manage createsuperuser
+
+Username (leave blank to use 'akaliutau'): admin
+Email address: test@test.org
+Password:
+Password (again):
+
+Superuser created successfully.
+
+```
+
+2) To start the service with the following command (by some reason it does not start as a module):
+
+```
+python .\soa\microservices\order\manage.py runserver
+
+cur directory D:\repos-research\python-recipes
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+April 09, 2021 - 10:01:19
+Django version 3.2, using settings 'soa.microservices.order.order.settings'
+Starting development server at http://127.0.0.1:8000/
+
+```
+The first run will create a db.sqlite3 database with necessary tables.
+
+If the system log contains the output like this one:
+```
+You have 17 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, authtoken, contenttypes, main, sessions.
+Run 'python manage.py migrate' to apply them.
+```
+then perform migration in accordance with step 0 and step 1
+
+
+
+3) Point browser to https://localhost:8000/admin, login.
+
+Then click on Add and create a user with the username test_api. 
+
+When the user is created, create an APi token using AUTH TOKEN section.
+Assign this token to a newly created user: select the test_api in the drop-down menu and click SAVE. 
+
+4) Finally one can test built microservice using the simple test app in test_order.py:
+
+```
+python -m soa.microservices.order.test_order   --token 83622fab3429404dccd8da65ba97468a0306551e
+
+```
+On log server one can observe the server has responded with 201 status:
+
+```
+created Order object (2)
+[09/Apr/2021 17:01:35] "POST /api/order/add/ HTTP/1.1" 201 14
+
+```
 
 Requirements
 =============
