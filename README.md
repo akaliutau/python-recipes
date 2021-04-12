@@ -294,7 +294,7 @@ then perform migration in accordance with step 0 and step 1
 
 Then click on Add and create a user with the username test_api. 
 
-When the user is created, create an APi token using AUTH TOKEN section.
+When the user is created, create an API token using AUTH TOKEN section.
 Assign this token to a newly created user: select the test_api in the drop-down menu and click SAVE. 
 
 4) Finally one can test built microservice using the simple test app in test_order.py:
@@ -303,7 +303,7 @@ Assign this token to a newly created user: select the test_api in the drop-down 
 python -m soa.microservices.order.test_order   --token 83622fab3429404dccd8da65ba97468a0306551e
 
 ```
-On log server one can observe the server has responded with 201 status:
+In server's log one can observe that server has responded with 201 status:
 
 ```
 created Order object (2)
