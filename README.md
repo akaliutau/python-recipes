@@ -194,8 +194,8 @@ order/
 
     main/
        migrations/
-             __init__
-       <microservice implementation>
+           __init__
+           <microservice implementation>
       
     order/
        __init__
@@ -209,7 +209,7 @@ order/
 
 In order to create all tables and add the initial auth records to internal db use the step 0:
 
-01) Preliminary step: generate all necessary code using the commands:
+0) Preliminary step: generate all necessary code using the commands:
 
 create a package migrations inside your app directory (main in this case)
 
