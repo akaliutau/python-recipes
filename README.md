@@ -8,7 +8,7 @@ Topics covered so far:
 * OAuth2 authorization
 * Consuming public web APIs
 * Microservices in Python
-* Asynchronous messaging in Python (TBA)
+* Asynchronous messaging in Python
 * Serverless apps in Python (TBA)
 
 
@@ -179,6 +179,7 @@ Cache eviction rule is very simple:
 
 # Microservices
 
+## A classical microservice with lightweight db layer on the basis of SQLight
 
 The module soa.microservices contains the simple implementation of Order microservice with the following endpoints:
 
@@ -209,7 +210,7 @@ order/
 
 In order to create all tables and add the initial auth records to internal db use the step 0:
 
-0) Preliminary step: generate all necessary code using the commands:
+0) A preliminary step: generate all necessary code using the commands:
 
 create a package migrations inside your app directory (main in this case)
 
@@ -310,6 +311,56 @@ created Order object (2)
 [09/Apr/2021 17:01:35] "POST /api/order/add/ HTTP/1.1" 201 14
 
 ```
+
+## A microservice built with the help of Nameko framework
+
+This simple echo microservice is built using a sophisticated (but simple in use) framework - Nameko, RPC connectivity and Redis store as a persistence layer 
+
+
+1) start Docker using configuration specified in Dockerfile
+Note the default user created for RabbitMQ - these creds must be duplicated in config.yaml
+   
+```
+docker build -t rabbitmq:1.0 .
+docker run -d -p 5672:5672 rabbitmq:1.0
+
+docker run -d -p 6379:6379 --name redis redis
+```
+
+2) To run service, execute the following command:
+
+```
+nameko run messenger.core.service --config .\messenger\config.yaml
+```
+This command will result in the following output:
+
+```
+nameko run messenger.core.service --config .\messenger\config.yaml
+starting services: nameko_message_service, web_server
+Connected to amqp://user:**@127.0.0.1:5672//
+Connected to amqp://user:**@127.0.0.1:5672//
+
+```
+
+3) In order to make our own calls, we can launch a Python shell that has Nameko integrated to allow us to call our entrypoints. 
+   To access it, open a new terminal window and execute the following command:
+   
+```
+nameko shell --broker pyamqp://user:user@localhost:5672
+```
+
+This should give you access to a Python shell with the ability to make Remote Procedure Calls. 
+
+```
+>>> n.rpc.nameko_message_service.save_message("this is the first message")
+'f5becb1e408e455cad3b479681e541ff'
+>>> n.rpc.nameko_message_service.get_all_messages()
+[{'id': 'f5becb1e408e455cad3b479681e541ff', 'message': 'this is the first message', 'expires_in': 6246}]
+>>>
+
+```
+
+
 
 Requirements
 =============

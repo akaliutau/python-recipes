@@ -17,6 +17,12 @@ services:
   rabbitmq:
       image: rabbitmq:3.8-alpine
       container_name: rabbitmq
+      # Define environment variables.
+      environment:
+         RABBITMQ_USER: user
+         RABBITMQ_PASSWORD: user
+         RABBITMQ_PID_FILE: /var/lib/rabbitmq/mnesia/rabbitmq
+
       volumes:
           - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
           - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/

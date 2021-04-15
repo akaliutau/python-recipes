@@ -1,16 +1,18 @@
-FROM python:3-alpine
+FROM rabbitmq:3.8-alpine
 
 MAINTAINER Aliaksei Kaliutau
 
-WORKDIR /app
+WORKDIR /usr/local/rabbitmq
 
-COPY ./app/requirements.txt /app/requirements.txt
+# Define environment variables.
+ENV RABBITMQ_USER user
+ENV RABBITMQ_PASSWORD user
+ENV RABBITMQ_PID_FILE /var/lib/rabbitmq/mnesia/rabbitmq
 
-RUN apk add --update \
-  && pip install --upgrade pip  \
-  && pip install -r requirements.txt \
-  && rm -rf /var/cache/apk/*
+COPY ./rabbitmq-init.sh /usr/local/rabbitmq/rabbitmq-init.sh
+RUN chmod +x /usr/local/rabbitmq/rabbitmq-init.sh
+EXPOSE 5672
+EXPOSE 15672
 
-COPY ./app /app
-
-CMD python app.py run -h 0.0.0.0
+# Define default command
+CMD ["./rabbitmq-init.sh"]

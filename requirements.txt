@@ -2,7 +2,7 @@ beautifulsoup4==4.6.0
 selenium==3.6.0
 requests==2.25.1
 Flask==1.0
-PyYAML==5.4
+pyyaml==5.4.1
 pymongo==3.6.0
 
 
@@ -13,3 +13,32 @@ Jinja2~=2.11.3
 django==3.2
 djangorestframework==3.12.4
 python-dateutil==2.8.1
+
+amqp==2.6.1               # via kombu
+anyjson==0.3.3            # via kombu
+certifi==2020.12.5        # via requests
+chardet==3.0.4            # via requests
+enum-compat==0.0.2        # via eventlet
+eventlet==0.30.2          # via nameko
+greenlet==1.0.0           # via eventlet
+idna==2.6                 # via requests
+kombu==4.6.11             # via nameko
+markupsafe==1.0           # via jinja2
+mock==4.0.3               # via nameko
+nameko==2.13.0
+path.py==12.5.0           # via nameko
+pbr==3.1.1                # via mock
+redis==2.10.6
+six==1.11.0               # via mock, nameko
+urllib3==1.22             # via requests
+werkzeug==0.14.1          # via nameko
+wrapt==1.12.1             # via nameko
+
+attrs==20.3.0             # via pytest
+fakeredis==0.9.0
+pluggy==0.13.1            # via pytest
+py==1.10.0                # via pytest
+pytest==6.2.3
+
+
+
