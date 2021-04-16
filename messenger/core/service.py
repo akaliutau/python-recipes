@@ -39,7 +39,7 @@ class WebServer:
 
     @http('GET', '/')
     def home(self, request):
-        messages = self.message_service.get_all_messages()
+        messages = {}
         rendered_template = self.jinja.render_home(messages)
         html_response = create_html_response(rendered_template)
 

@@ -3,6 +3,7 @@ from uuid import uuid4
 from nameko.extensions import DependencyProvider
 from redis import StrictRedis
 
+# 10 sec
 MESSAGE_LIFETIME = 10000
 
 
@@ -41,22 +42,6 @@ class RedisClient:
         self.redis.set(message_id, message, px=MESSAGE_LIFETIME)
 
         return message_id
-
-    # def get_all_messages(self):
-    #     message_ids = self.redis.keys()
-    #     messages = []
-
-    #     for message_id in message_ids:
-    #         message = self.redis.get(message_id)
-    #         messages.append(
-    #             {
-    #                 'id': message_id,
-    #                 'message': self.redis.get(message_id),
-    #                 'expires_in': self.redis.pttl(message_id),
-    #             }
-    #         )
-
-    #     return messages
 
     def get_all_messages(self):
         return [

@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+
+  redis:
+    image: redis:6.2.1-alpine
+    container_name: redis
+    ports:
+        - 6379:6379
+         
+
+  rabbitmq:
+      build:
+          context: .
+          dockerfile: Dockerfile
+      container_name: rabbitmq
+      volumes:
+          - ./.docker/rabbitmq/etc/:/etc/rabbitmq/
+          - ./.docker/rabbitmq/logs/:/var/log/rabbitmq/
+      ports:
+          - 5672:5672
+          - 15672:15672

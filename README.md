@@ -314,7 +314,8 @@ created Order object (2)
 
 ## A microservice built with the help of Nameko framework
 
-This simple echo microservice is built using a sophisticated (but simple in use) framework - Nameko, RPC connectivity and Redis store as a persistence layer 
+This is a simple echo microservice is built using a sophisticated (but simple in use) framework - Nameko, 
+RPC connectivity and Redis Data Store as a persistence layer 
 
 
 1) start Docker using configuration specified in Dockerfile
@@ -325,6 +326,12 @@ docker build -t rabbitmq:1.0 .
 docker run -d -p 5672:5672 rabbitmq:1.0
 
 docker run -d -p 6379:6379 --name redis redis
+```
+
+Alternatively one can use a docker-compose-asynch-msg.yml file:
+
+```
+docker-compose -f docker-compose-asynch-msg.yml up --build
 ```
 
 2) To run service, execute the following command:

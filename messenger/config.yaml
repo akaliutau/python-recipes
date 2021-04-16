@@ -1,4 +1,4 @@
-AMQP_URI: 'amqp://user:user@localhost:5672'
+AMQP_URI: 'pyamqp://user:user@localhost:5672'
 WEB_SERVER_ADDRESS: '0.0.0.0:8000'
 rpc_exchange: 'nameko-rpc'
 REDIS_URL: 'redis://localhost:6379/0'
